@@ -10,7 +10,7 @@ function Input({ onInputChange }) {
   };
 
   return ( 
-    <input style={{ marginTop: '10px', marginBottom: '30px'}} type="text" value={inputValue} onChange={handleChange} />
+    <input style={{ marginTop: '10px' }} type="text" value={inputValue} onChange={handleChange} />
   );
 }
 
