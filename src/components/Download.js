@@ -1,28 +1,64 @@
-import React, { useRef } from "react";
-import QRCode from "react-qr-code";
-import { toPng } from "html-to-image";
-import { saveAs } from "file-saver";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import QRCodeStyling from "qr-code-styling";
 import { Link } from ".";
 
 function Download({ qrValue }) {
+  const [fileExt, setFileExt] = useState("png");
+  const [selectedImage, setSelectedImage] = useState(null);
   const qrCodeRef = useRef();
 
-  const handleDownloadClick = () => {
-    const qrCodeElement = qrCodeRef.current;
+  const qrCode = useMemo(() => {
+    return new QRCodeStyling({
+      width: 300,
+      height: 300,
+      data: qrValue,
+      image: selectedImage,
+    });
+  }, [qrValue, selectedImage]);
 
-    toPng(qrCodeElement)
-      .then(function (dataUrl) {
-        saveAs(dataUrl, "qrcode.png");
-      })
-      .catch(function (error) {
-        console.error("Error converting to image", error);
-      });
+  useEffect(() => {
+    qrCode.append(qrCodeRef.current);
+    return () => {};
+  }, [qrCode]);
+
+  useEffect(() => {
+    qrCode.update({
+      data: qrValue,
+      image: selectedImage,
+    });
+  }, [qrCode, qrValue, selectedImage]);
+
+  const handleExtensionChange = (event) => {
+    setFileExt(event.target.value);
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setSelectedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDownloadClick = () => {
+    qrCode.download({
+      extension: fileExt,
+    });
   };
 
   return (
     <div className="center">
-      <QRCode ref={qrCodeRef} value={qrValue} />
+      <div ref={qrCodeRef}></div>
       <Link linkValue={qrValue} />
+      <input style={{ marginBottom: "30px" }} type="file" accept="image/*" onChange={handleImageChange} />
+      <select style={{ marginBottom: "30px" }} onChange={handleExtensionChange} value={fileExt}>
+        <option value="png">PNG</option>
+        <option value="jpeg">JPEG</option>
+        <option value="webp">WEBP</option>
+      </select>
       <button onClick={handleDownloadClick}>
         Download QR Code
       </button>
