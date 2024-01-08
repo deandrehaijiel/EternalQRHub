@@ -23,11 +23,17 @@ code {
   align-items: center;
 }
 
+.divider {
+  border: 1px solid #ddd;
+  width: 100%;
+  margin: 20px 0;
+}
+
 /* Switch CSS */
 .switch-container {
   display: flex;
   align-items: center;
-  margin: 30px 0;
+  margin: 30px;
 }
 
 .switch {
@@ -71,11 +77,11 @@ code {
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #4267b2;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #4267b2;
 }
 
 input:checked + .slider:before {
@@ -94,5 +100,22 @@ input:checked + .slider:before {
 }
 
 .switch-label.active {
-  color: #2196F3;
+  color: #4267b2;
+}
+
+/* Animation CSS */
+@keyframes transitionIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.transition-in {
+  animation: transitionIn 1s ease-in-out;
 }

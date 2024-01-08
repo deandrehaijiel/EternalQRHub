@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Title, Input, Download } from "./components";
+import { Title, Input, QR, Footer } from "./components";
 
 function App() {
   const [qrValue, setQrValue] = useState("https://linktr.ee/deandrehaijiel");
@@ -9,11 +9,14 @@ function App() {
   };
 
   return (
-    <div className="center">
+    <>
       <Title />
-      <Input onInputChange={handleInputChange} />
-      <Download qrValue={qrValue} />
-    </div>
+      <div className="center transition-in">
+        <Input onInputChange={handleInputChange} />
+        <QR qrValue={qrValue} />
+      </div>
+      <Footer />
+    </>
   );
 }
 

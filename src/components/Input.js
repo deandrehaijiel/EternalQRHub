@@ -10,7 +10,9 @@ function Input({ onInputChange }) {
   };
 
   return ( 
-    <input style={{ marginTop: '10px' }} type="text" value={inputValue} onChange={handleChange} />
+    <div style={{ display: "inline" }}>
+      <strong>Text: &nbsp;</strong><input style={{ marginTop: '10px' }} type="text" value={inputValue} onChange={handleChange} />
+    </div>
   );
 }
 

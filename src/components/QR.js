@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useMemo } from "react";
 import QRCodeStyling from "qr-code-styling";
 import { Link } from ".";
 
-function Download({ qrValue }) {
+function QR({ qrValue }) {
   const [isAdvancedMode, setIsAdvancedMode] = useState(true);
 
   const [fileExt, setFileExt] = useState("png");
@@ -37,6 +37,21 @@ function Download({ qrValue }) {
     { offset: 1, color: "#4267b2" },
   ]);
   const [cornersDotType, setCornersDotType] = useState("dot");
+
+  const [backgroundColor, setBackgroundColor] = useState("#ffffff");
+  const [backgroundColorType, setBackgroundColorType] = useState("single");
+  const [backgroundGradientType, setBackgroundGradientType] = useState(null);
+  const [backgroundGradientRotation, setBackgroundGradientRotation] = useState(0);
+  const [backgroundGradientStops, setBackgroundGradientStops] = useState([
+    { offset: 0, color: "#4267b2" },
+    { offset: 1, color: "#4267b2" },
+  ]);
+
+  const [hideBackgroundDots, setHideBackgroundDots] = useState(true);
+  const [imageSize, setImageSize] = useState(0.4);
+  const [imageMargin, setImageMargin] = useState(0);
+
+  const [typeNumber, setTypeNumber] = useState(0);
 
   const qrCodeRef = useRef();
 
@@ -76,6 +91,23 @@ function Download({ qrValue }) {
         },
         type: cornersDotType,
       },
+      backgroundOptions: {
+        color: backgroundColor,
+        backgroundColorType: backgroundColorType,
+        gradient: {
+          type: backgroundGradientType,
+          rotation: backgroundGradientRotation,
+          colorStops: backgroundGradientStops,
+        },
+      },
+      imageOptions: {
+        hideBackgroundDots: hideBackgroundDots,
+        imageSize: imageSize,
+        margin: imageMargin,
+      },
+      qrOptions: {
+        typeNumber: typeNumber,
+      }
     });
   }, [
     qrValue,
@@ -98,6 +130,15 @@ function Download({ qrValue }) {
     cornersDotGradientRotation,
     cornersDotGradientStops,
     cornersDotType,
+    backgroundColor,
+    backgroundColorType,
+    backgroundGradientType,
+    backgroundGradientRotation,
+    backgroundGradientStops,
+    hideBackgroundDots,
+    imageSize,
+    imageMargin,
+    typeNumber
   ]);
 
   useEffect(() => {
@@ -144,6 +185,17 @@ function Download({ qrValue }) {
       ]);
     }
   }, [cornersDotColorType, cornersDotColor]);
+
+  useEffect(() => {
+    if (backgroundColorType === 'single') {
+      setBackgroundGradientType(null);
+      setBackgroundGradientRotation(0);
+      setBackgroundGradientStops([
+        { offset: 0, color: backgroundColor },
+        { offset: 1, color: backgroundColor },
+      ]);
+    }
+  }, [backgroundColorType, backgroundColor]);
 
   const handleInputChange = (field, value) => {
     switch (field) {
@@ -231,7 +283,44 @@ function Download({ qrValue }) {
       case 'cornersDotType':
         setCornersDotType(value);
         break;
-  
+
+      case 'backgroundColor':
+        setBackgroundColor(value);
+        break;
+      case 'backgroundColorType':
+        setBackgroundColorType(value);
+        if (value === 'single') {
+          setBackgroundGradientType(null);
+          setBackgroundGradientRotation(null);
+          setBackgroundGradientStops([
+            { offset: 0, color: backgroundColor },
+            { offset: 1, color: backgroundColor },
+          ]);
+        }
+        break;
+      case 'backgroundGradientType':
+        setCornersDotGradientType(value);
+        break;
+      case 'backgroundGradientRotation':
+        setBackgroundGradientRotation(value);
+        break;
+      case 'backgroundGradientStops':
+        setBackgroundGradientStops(value);
+        break;
+
+      case 'hideBackgroundDots':
+        setHideBackgroundDots(value);
+        break;
+      case 'imageSize':
+        setImageSize(value);
+        break;
+      case 'imageMargin':
+        setImageMargin(value);
+        break;
+      case 'typeNumber':
+        setTypeNumber(value);
+        break;
+
       default:
         break;
     }
@@ -282,9 +371,14 @@ function Download({ qrValue }) {
           <div style={{ display: "flex", flexDirection: "column", textAlign: "start", gap: "10px" }}>
 
             {/* Input fields for Dots Options */}
-            <label>Dots Color: &nbsp;
-              <input type="color" value={dotsColor} onChange={(e) => handleInputChange('dotsColor', e.target.value)} />
-            </label>
+            <h3>Dots</h3>
+            {dotsColorType === 'single' && (
+              <>
+                <label>Dots Color: &nbsp;
+                  <input type="color" value={dotsColor} onChange={(e) => handleInputChange('dotsColor', e.target.value)} />
+                </label>
+              </>
+            )}
             <div>
               <span>Dots Color Type: &nbsp;</span>
               <label>
@@ -344,12 +438,17 @@ function Download({ qrValue }) {
               </select>
             </label>
 
-            <hr style={{ border: "1px solid #ddd", width: "100%", margin: "20px 0" }} />
+            <hr className="divider" />
 
             {/* Input fields for Corners Square Options */}
-            <label>Corners Square Color: &nbsp;
-              <input type="color" value={cornersSquareColor} onChange={(e) => handleInputChange('cornersSquareColor', e.target.value)} />
-            </label>
+            <h3>Corners Square</h3>
+            {cornersSquareColorType === 'single' && (
+              <>
+                <label>Corners Square Color: &nbsp;
+                  <input type="color" value={cornersSquareColor} onChange={(e) => handleInputChange('cornersSquareColor', e.target.value)} />
+                </label>
+              </>
+            )}
             <div>
               <span>Corners Square Color Type: &nbsp;</span>
               <label>
@@ -407,12 +506,17 @@ function Download({ qrValue }) {
               </select>
             </label>
 
-            <hr style={{ border: "1px solid #ddd", width: "100%", margin: "20px 0" }} />
+            <hr className="divider" />
 
             {/* Input fields for Corners Dot Options */}
-            <label>Corners Dot Color: &nbsp;
-              <input type="color" value={cornersDotColor} onChange={(e) => handleInputChange('cornersDotColor', e.target.value)} />
-            </label>
+            <h3>Corners Dot</h3>
+            {cornersDotColorType === 'single' && (
+              <>
+                <label>Corners Dot Color: &nbsp;
+                  <input type="color" value={cornersDotColor} onChange={(e) => handleInputChange('cornersDotColor', e.target.value)} />
+                </label>
+              </>
+            )}
             <div>
               <span>Corners Dot Color Type: &nbsp;</span>
               <label>
@@ -469,21 +573,116 @@ function Download({ qrValue }) {
               </select>
             </label>
 
+            <hr className="divider" />
+
+            {/* Input fields for Background Options */}
+            <h3>Background</h3>
+            {backgroundColorType === 'single' && (
+              <>
+                <label>Background Color: &nbsp;
+                  <input type="color" value={backgroundColor} onChange={(e) => handleInputChange('backgroundColor', e.target.value)} />
+                </label>
+              </>
+            )}
+            <div>
+              <span>Background Color Type: &nbsp;</span>
+              <label>
+                <input
+                  type="radio"
+                  value="single"
+                  checked={backgroundColorType === "single"}
+                  onChange={() => handleInputChange('backgroundColorType', "single")}
+                />
+                Single Color &nbsp; &nbsp;
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  value="gradient"
+                  checked={backgroundColorType === "gradient"}
+                  onChange={() => handleInputChange('backgroundColorType', "gradient")}
+                />
+                Color Gradient
+              </label>
+            </div>
+
+            {backgroundColorType === 'gradient' && (
+              <>
+                <label>Background Gradient Type: &nbsp;
+                  <select value={backgroundGradientType} onChange={(e) => handleInputChange('backgroundGradientType', e.target.value)}>
+                    <option value="linear">Linear</option>
+                    <option value="radial">Radial</option>
+                  </select>
+                </label>
+                <label>Background Gradient Rotation: &nbsp;
+                  <input type="number" value={backgroundGradientRotation} onChange={(e) => handleInputChange('backgroundGradientRotation', e.target.value)} />
+                </label>
+                <label>Background Gradient: &nbsp;
+                  <input 
+                    type="color" 
+                    value={backgroundGradientStops[0].color} 
+                    onChange={(e) => handleInputChange('backgroundGradientStops', [{ ...backgroundGradientStops[0], color: e.target.value }, backgroundGradientStops[1]])} 
+                  />
+                  <input 
+                    type="color" 
+                    value={backgroundGradientStops[1].color} 
+                    onChange={(e) => handleInputChange('backgroundGradientStops', [backgroundGradientStops[0], { ...backgroundGradientStops[1], color: e.target.value }])} 
+                  />
+                </label>
+              </>
+            )}
+
+            {/* Input fields for Image Options */}
+            {chosenImage && (
+              <>
+                <h3>Image</h3>
+                <label>
+                  Hide Background Dots: &nbsp;
+                  <input type="checkbox" checked={hideBackgroundDots} onChange={(e) => handleInputChange('hideBackgroundDots', e.target.checked)} />
+                </label>
+                <label>Image Size: &nbsp;
+                  <input type="number" value={imageSize} onChange={(e) => handleInputChange('imageSize', e.target.value)} min={0} max={1} step={0.1} />
+                </label>
+                <label>
+                  Image Margin: &nbsp;
+                  <input type="number" value={imageMargin} onChange={(e) => handleInputChange('imageMargin', e.target.value)} min={0} />
+                </label>
+              </>
+            )}
+
+            {/* Input fields for QR Options */}
+            <h3>Image</h3>
+            <label>Type Number: &nbsp;
+              <select 
+                value={typeNumber} 
+                onChange={(e) => handleInputChange('typeNumber', e.target.value)}
+              >
+                {[...Array(41).keys()].map((num) => (
+                  (num !== 1 && num !== 2) && (
+                    <option key={num} value={num}>{num}</option>
+                  )
+                ))}
+              </select>
+            </label>
+
           </div>
         )}
       </div>
-      <input style={{ margin: "30px 0" }} type="file" accept="image/*" onChange={handleImageChange} />
+      <div>
+        <span>Insert Logo: &nbsp;</span>
+        <input style={{ margin: "60px 0 30px 0" }} type="file" accept="image/*" onChange={handleImageChange} />
+      </div>
       <select style={{ marginBottom: "30px" }} onChange={handleExtensionChange} value={fileExt}>
         <option value="png">PNG</option>
         <option value="jpeg">JPEG</option>
         <option value="webp">WEBP</option>
         <option value="svg">SVG</option>
       </select>
-      <button onClick={handleDownloadClick}>
+      <button style={{ marginBottom: "70px" }} onClick={handleDownloadClick}>
         Download QR Code
       </button>
     </div>
   );
 }
 
-export default Download;
+export default QR;
