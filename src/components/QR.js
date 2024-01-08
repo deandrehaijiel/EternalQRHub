@@ -3,7 +3,7 @@ import QRCodeStyling from "qr-code-styling";
 import { Link } from ".";
 
 function QR({ qrValue }) {
-  const [isAdvancedMode, setIsAdvancedMode] = useState(true);
+  const [isAdvancedMode, setIsAdvancedMode] = useState(false);
 
   const [fileExt, setFileExt] = useState("png");
   const [chosenImage, setChosenImage] = useState(null);
