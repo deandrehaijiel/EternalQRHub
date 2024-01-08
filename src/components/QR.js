@@ -668,7 +668,7 @@ function QR({ qrValue }) {
           </div>
         )}
       </div>
-      <div>
+      <div className="center">
         <span>Insert Logo: &nbsp;</span>
         <input style={{ margin: "60px 0 30px 0" }} type="file" accept="image/*" onChange={handleImageChange} />
       </div>
