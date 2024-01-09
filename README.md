@@ -37,7 +37,7 @@ Eternal QR Hub is a powerful QR code generator that offers both Basic and Advanc
 
 Follow us for updates and exciting news:
 
-- LinkedIn: [Your LinkedIn](https://www.linkedin.com/in/deandrehaijielim/)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/deandrehaijielim/)
 
 ## License 📄
 
