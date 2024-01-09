@@ -668,10 +668,12 @@ function QR({ qrValue }) {
           </div>
         )}
       </div>
-      <div className="center">
-        <span>Insert Logo: &nbsp;</span>
-        <input style={{ margin: "60px 0 30px 0" }} type="file" accept="image/*" onChange={handleImageChange} />
-      </div>
+      {isAdvancedMode && (
+        <div className="center" style={{ display: "inline", margin: "60px 0 30px 0" }} >
+          <span>Insert Logo: &nbsp;</span>
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </div>
+      )}
       <select style={{ marginBottom: "30px" }} onChange={handleExtensionChange} value={fileExt}>
         <option value="png">PNG</option>
         <option value="jpeg">JPEG</option>
