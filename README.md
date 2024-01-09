@@ -1,10 +1,10 @@
-# Eternal QR Hub 🌐✨
+# EternalQRHub 🌐✨
 
-Welcome to Eternal QR Hub – Your Gateway to Stunning and Customized QR Codes!
+Welcome to EternalQRHub – Your Gateway to Stunning and Customized QR Codes!
 
 ## Overview 🚀
 
-Eternal QR Hub is a powerful QR code generator that offers both Basic and Advanced modes, catering to your diverse needs. Whether you prefer simplicity or crave customization, we've got you covered!
+EternalQRHub is a powerful QR code generator that offers both Basic and Advanced modes, catering to your diverse needs. Whether you prefer simplicity or crave customization, we've got you covered!
 
 ## Features 🎉
 
@@ -18,7 +18,7 @@ Eternal QR Hub is a powerful QR code generator that offers both Basic and Advanc
 - **Unleash Your Creativity**: Dive into advanced customization options to make your QR code uniquely yours.
 - **Color Gradients, Corners, Dots Customization**: Explore a myriad of possibilities to add a personal touch.
 
-## Why Choose Eternal QR Hub? 🤔
+## Why Choose EternalQRHub? 🤔
 
 - **Free of Charge**: Empowering you without costing a dime – because customization should be accessible to all.
 - **On-the-Go Convenience**: Stay tuned for the mobile app version, making QR code magic possible wherever you go.
