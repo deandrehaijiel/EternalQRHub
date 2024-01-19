@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/EternalQRHub/static/css/main.342683cd.css",
-    "main.js": "/EternalQRHub/static/js/main.b033a5da.js",
+    "main.js": "/EternalQRHub/static/js/main.de130c6e.js",
     "static/js/787.51bfda27.chunk.js": "/EternalQRHub/static/js/787.51bfda27.chunk.js",
     "index.html": "/EternalQRHub/index.html",
     "main.342683cd.css.map": "/EternalQRHub/static/css/main.342683cd.css.map",
-    "main.b033a5da.js.map": "/EternalQRHub/static/js/main.b033a5da.js.map",
+    "main.de130c6e.js.map": "/EternalQRHub/static/js/main.de130c6e.js.map",
     "787.51bfda27.chunk.js.map": "/EternalQRHub/static/js/787.51bfda27.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.342683cd.css",
-    "static/js/main.b033a5da.js"
+    "static/js/main.de130c6e.js"
   ]
 }
