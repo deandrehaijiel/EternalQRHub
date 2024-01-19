@@ -4,6 +4,7 @@ import { Link } from ".";
 
 function QR({ qrValue }) {
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const [fileExt, setFileExt] = useState("png");
   const [chosenImage, setChosenImage] = useState(null);
@@ -140,6 +141,26 @@ function QR({ qrValue }) {
     imageMargin,
     typeNumber
   ]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const isTabletOrMobile = window.innerWidth <= 768 && window.innerHeight <= 1024;
+
+      if (isAdvancedMode && isTabletOrMobile) {
+        setShowAlert(true);
+      } else {
+        setShowAlert(false);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
 
   useEffect(() => {
     qrCode.append(qrCodeRef.current);
@@ -349,17 +370,22 @@ function QR({ qrValue }) {
 
   return (
     <div className="center">
-      <div className="switch-container">
-        <span className={`switch-label ${isAdvancedMode ? '' : 'active'}`}>Basic</span>
-        <label className="switch">
-          <input
-            type="checkbox"
-            checked={isAdvancedMode}
-            onChange={(e) => handleInputChange('isAdvancedMode', e.target.checked)}
-          />
-          <span className="slider"></span>
-        </label>
-        <span className={`switch-label ${isAdvancedMode ? 'active' : ''}`}>Advance</span>
+      <div className="center">
+        <div className="switch-container">
+          <span className={`switch-label ${isAdvancedMode ? '' : 'active'}`}>Basic</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={isAdvancedMode}
+              onChange={(e) => handleInputChange('isAdvancedMode', e.target.checked)}
+            />
+            <span className="slider"></span>
+          </label>
+          <span className={`switch-label ${isAdvancedMode ? 'active' : ''}`}>Advance</span>
+        </div>
+        {isAdvancedMode && showAlert && (
+          <h4 style={{ textAlign: "center" }}>For a better experience, please use<br/>landscape mode on tablet or mobile.</h4>
+        )}
       </div>
       <div style={{ display: "flex", gap: "100px" }}>
         <div className="center">
