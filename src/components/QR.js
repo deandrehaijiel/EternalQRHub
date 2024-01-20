@@ -358,6 +358,8 @@ function QR({ qrValue }) {
     }
   };
 
+  useEffect(() => {}, [chosenImage]);
+
   const handleExtensionChange = (event) => {
     setFileExt(event.target.value);
   };
