@@ -349,16 +349,17 @@ function QR({ qrValue }) {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+  
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
+  
+      reader.onloadend = () => {
         setChosenImage(reader.result);
       };
+  
       reader.readAsDataURL(file);
     }
   };
-
-  useEffect(() => {}, [chosenImage]);
 
   const handleExtensionChange = (event) => {
     setFileExt(event.target.value);
