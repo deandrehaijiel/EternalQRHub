@@ -6,8 +6,8 @@ function QR({ qrValue }) {
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
-  const [fileExt, setFileExt] = useState("png");
   const [chosenImage, setChosenImage] = useState(null);
+  const [fileExt, setFileExt] = useState("png");
 
   const [dotsColor, setDotsColor] = useState("#4267b2");
   const [dotsColorType, setDotsColorType] = useState("single");
